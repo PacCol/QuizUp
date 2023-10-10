@@ -20,7 +20,7 @@ $("#profile-button").click(function () {
             success: function (response) {
                 loader(false);
                 if (response == "success") {
-
+                    console.log("loggedin");
                 } else {
                     alertBox("Erreur", "Vérifiez votre mot de passe.", `
                         <button class="btn btn-sp primary btn-align-right ripple-effect cancel">Fermer</button>`);
