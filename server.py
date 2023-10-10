@@ -40,11 +40,12 @@ def register():
 
 @app.route("/login", methods=["POST"])
 def login():
-	user = Users.query.filter_by(
-	    username=request.form.get("username")).first()
-	if user.password == request.form.get("password"):
+	user = Users.query.filter_by(username=request.json["username"]).first()
+	if user.password == request.json["password"]:
 		login_user(user)
-		return redirect(url_for("home"))
+		return "success"
+	else:
+		return "error"
 
 
 @app.route("/logout")
@@ -65,6 +66,7 @@ def favicon():
 @app.route("/home/<path:path>")
 def webApp(path):
     return send_from_directory("static", path)
+
 
 if __name__ == "__main__":
 	app.run("0.0.0.0")
