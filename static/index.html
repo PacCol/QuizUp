@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr" translate="no">
+
+<head>
+    <title>QuizUp</title>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="icon" type="image/x-icon" href="img/trophee.ico">
+
+    <link rel="stylesheet" href="RealCSS/fonts/material-design-icons/material-design-icons-round.css">
+    <link rel="stylesheet" href="RealCSS/fonts/montserrat/montserrat.css">
+    <link rel="stylesheet" href="RealCSS/all.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="RealCSS/jquery.min.js "></script>
+
+    <style>
+        @media (max-width: 860px) {
+            .search-bar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar .btn {
+                display: none;
+            }
+        }
+
+        .menu {
+            flex-basis: 254px;
+            width: 254px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <div class="nav-title">
+            <i class="material-icons open-menu">menu</i>
+            <h3>QuizUp</h3>
+            <img src="img/trophee.png" alt="logo" width="30px">
+        </div>
+
+        <div id="search-bar" class="search-bar">
+            <div class="search-field">
+                <i class="material-icons">search</i>
+                <input type="text" placeholder="Chercher un quiz...">
+                <i class="material-icons">expand_more</i>
+            </div>
+            <div id="search-list" class="search-list">
+                <hr class="divider">
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                $("#search-bar input").keyup(function() {
+                    let val = $("#search-bar input").val();
+                    if (val == "") {
+                        $("#search-list").hide();
+                        return;
+                    }
+
+                    var results = ["En travaux"];
+
+                    $("#search-list a").remove();
+
+                    if (results.length != 0) {
+                        $("#search-list").show();
+
+                        for (var i = 0; i < results.length; i++) {
+                            $("#search-list").append(`
+                                <a href="#">${results[i]}</a>
+                            `);
+                        }
+
+                    } else {
+                        $("#search-list").hide();
+                    }
+
+                });
+            });
+        </script>
+
+        <div></div>
+
+    </div>
+
+    <div class="main-container">
+
+        <div class="menu icons-only-available">
+
+            <div class="menu-title">
+                <h3>QuizUp</h3>
+                <i class="material-icons close-menu">close</i>
+            </div>
+
+            <div class="menu-button primary ripple-effect" id="explore-button">
+                <i class="material-icons">explore</i>
+                <p>Explorer</p>
+            </div>
+
+            <div class="menu-button success ripple-effect" id="new-button">
+                <i class="material-icons">add</i>
+                <p>Nouveau quiz</p>
+            </div>
+
+            <div class="menu-button warning ripple-effect" id="progression-button">
+                <i class="material-icons">emoji_events</i>
+                <p>Progression</p>
+            </div>
+
+            <div class="menu-button danger ripple-effect" id="profile-button">
+                <i class="material-icons">person</i>
+                <p>Profile</p>
+            </div>
+
+            <hr class="divider">
+
+            <div class="menu-button">
+                <i class="material-icons">dark_mode</i>
+                <p>Thème sombre</p>
+                <label class="toggle-switch primary dark-theme-toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <script>
+                $(".menu-button").click(function () {
+                    if ($(this).hasClass("ripple-effect")) {
+                        $(".menu-button").removeClass("menu-button-active");
+                        $(this).addClass("menu-button-active");
+                    }
+                });
+            </script>
+        </div>
+
+        <div class="app">
+
+            <div id="explore">
+                <div class="control">
+                    <h1>Explorer les quiz</h1>
+                </div>
+
+                <h3>En travaux</h3>
+            </div>
+
+            <div id="new">
+                <div class="control">
+                    <h1>Créer un nouveau quiz</h1>
+                </div>
+
+                <div class="modern-input primary">
+                    <input type="text" placeholder=" " autocomplete="off">
+                    <p>Entrez le nom du quiz</p>
+                </div>
+            </div>
+
+            <div id="progression">
+                <div class="control">
+                    <h1>Ma progression</h1>
+                </div>
+
+                <h3>En travaux</h3>
+            </div>
+
+            <div id="profile">
+                <div class="control">
+                    <h1>Mon profile</h1>
+                </div>
+
+                <div id="login">
+                    <h3>Se connecter</h3>
+                    <div class="modern-input primary">
+                        <input type="text" id="username-login" placeholder=" " autocomplete="off">
+                        <p>Entrez votre email</p>
+                    </div>
+                    <div class="modern-input primary">
+                        <input type="password" id="password-login" placeholder=" " autocomplete="off">
+                        <p>Entrez votre mot de passe</p>
+                    </div>
+                    <button class="btn btn-sp primary ripple-effect" id="login-button">Se connecter</button>
+                    <button class="btn btn-lt primary ripple-effect" id="show-register-button">S'inscrire</button>
+                </div>
+                <div id="register">
+                    <h3>S'inscrire</h3>
+                    <div class="modern-input primary">
+                        <input type="text" id="username-register" placeholder=" " autocomplete="off">
+                        <p>Entrez votre email</p>
+                    </div>
+                    <div class="modern-input primary">
+                        <input type="password" id="password-register" placeholder=" " autocomplete="off">
+                        <p>Entrez un mot de passe</p>
+                    </div>
+                    <button class="btn btn-sp primary ripple-effect" id="register-button">S'inscrire</button>
+                    <button class="btn btn-lt primary ripple-effect" id="show-login-button">Se connecter</button>
+                </div>
+                <div id="loggedin"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="RealCSS/all.min.js "></script>
+
+    <script src="js/section.js "></script>
+    <script src="js/profile.js "></script>
+
+</body>
+
+</html>

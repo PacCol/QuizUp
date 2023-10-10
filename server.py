@@ -31,11 +31,11 @@ def loader_user(user_id):
 
 @app.route('/register', methods=["POST"])
 def register():
-	user = Users(username=request.form.get("username"),
-					password=request.form.get("password"))
+	print(request.json["username"])
+	user = Users(username=request.json["username"], password=request.json["password"])
 	db.session.add(user)
 	db.session.commit()
-	return redirect(url_for("login"))
+	return "success"
 
 
 @app.route("/login", methods=["POST"])
@@ -59,7 +59,7 @@ def home():
 
 @app.route("/favicon.ico")
 def favicon():
-    return send_from_directory("static", "favicon.ico")
+    return send_from_directory("static/ing", "favicon.ico")
 
 
 @app.route("/home/<path:path>")
@@ -67,4 +67,4 @@ def webApp(path):
     return send_from_directory("static", path)
 
 if __name__ == "__main__":
-	app.run()
+	app.run("0.0.0.0")

@@ -1,0 +1,24 @@
+.nav-title h3 {
+    margin-right: 8px;
+}
+
+.nav-title img {
+    width: 30px;
+    margin-top: 4px;
+    position: absolute;
+}
+
+/*#login,*/
+#register {
+    display: none;
+}
+
+#login-button,
+#register-button {
+    float: left;
+}
+
+#show-register-button,
+#show-login-button {
+    float: right;
+}
