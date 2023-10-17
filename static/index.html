@@ -59,8 +59,8 @@
         </div>
 
         <script>
-            $(document).ready(function() {
-                $("#search-bar input").keyup(function() {
+            $(document).ready(function () {
+                $("#search-bar input").keyup(function () {
                     let val = $("#search-bar input").val();
                     if (val == "") {
                         $("#search-list").hide();
@@ -157,10 +157,49 @@
                     <h1>Créer un nouveau quiz</h1>
                 </div>
 
+
                 <div class="modern-input primary">
-                    <input type="text" placeholder=" " autocomplete="off">
+                    <input type="text" id="name-input" placeholder=" " autocomplete="off">
                     <p>Entrez le nom du quiz</p>
                 </div>
+
+                <div class="modern-input primary">
+                    <input type="text" id="theme-input" placeholder=" " autocomplete="off">
+                    <p>Entrez le thème du quiz</p>
+                </div>
+
+                <div class="modern-dropdown" id="question-number-dropdown">
+                    <button class="btn btn-sp primary ripple-effect">
+                        Nombre de questions <span class="btn-badge">1</span> <i class="material-icons">expand_more</i>
+                    </button>
+                    <div class="dropdown-content">
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="1">1</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="2">2</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="3">3</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="4">4</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="5">5</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="6">6</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="7">7</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="8">8</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="9">9</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="10">10</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="11">11</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="12">12</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="13">13</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="14">14</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="15">15</button>
+                    </div>
+                </div>
+
+                <div class="accordion" id="questions">
+                    <button class="accordion-tab ripple-effect primary">Question 1</button>
+                    <div class="panel">
+                        <p>Some text...</p>
+                    </div>
+                </div>
+
+                <button class="btn btn-sp primary ripple-effect" id="publish-button">Publier</button>
+
             </div>
 
             <div id="progression">
@@ -211,6 +250,7 @@
     <script src="RealCSS/all.min.js "></script>
 
     <script src="js/section.js "></script>
+    <script src="js/create.js "></script>
     <script src="js/profile.js "></script>
 
 </body>

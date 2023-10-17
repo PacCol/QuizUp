@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, send_from_directory
+from flask import Flask, request, url_for, redirect, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user
 
@@ -15,6 +15,15 @@ class Users(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(250), unique=True, nullable=False)
 	password = db.Column(db.String(250), nullable=False)
+
+
+class Quizs(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(250), unique=True, nullable=False)
+	user_id = db.Column(db.String(250), nullable=False)
+	theme = db.Column(db.String(250), nullable=False)
+	questions = db.Column(db.String(2250), nullable=False)
+	responses = db.Column(db.String(6000), nullable=False)
 
 
 db.init_app(app)
