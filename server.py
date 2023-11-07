@@ -1,22 +1,27 @@
+# On importe les modules necessaires au server et à la base de donnée
 from flask import Flask, request, url_for, redirect, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, logout_user
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 
+# On initialise le serveur
 app = Flask(__name__)
+
+# On initialise la base de données
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 app.config["SECRET_KEY"] = "abc"
 db = SQLAlchemy()
 
+# On initialise le gestionnaire de connexion, qu'on associe au serveur Flask
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-
+# On créé un objet User et on créé un tableau contenant les utilisateurs
 class Users(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(250), unique=True, nullable=False)
 	password = db.Column(db.String(250), nullable=False)
 
-
+# On créé un objet quiz contenant les quizs créés par les utilisateur et on créé un tableau les contenant
 class Quizs(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(250), unique=True, nullable=False)
@@ -26,18 +31,19 @@ class Quizs(db.Model):
 	responses = db.Column(db.String(6000), nullable=False)
 
 
+# On associe la base de données au serveur Flask
 db.init_app(app)
 
-
+# On continue l'initialisation de la base de donnée 
 with app.app_context():
 	db.create_all()
 
-
+# On charge les données de l'utilisateur à chaque requête
 @login_manager.user_loader
 def loader_user(user_id):
 	return Users.query.get(user_id)
 
-
+# On crée la route d'inscription au site
 @app.route('/register', methods=["POST"])
 def register():
 	print(request.json["username"])
@@ -46,7 +52,12 @@ def register():
 	db.session.commit()
 	return "success"
 
+# On crée une route pour pouvoir afficher les informations de l'utilisateur
+@app.route("/user")
+def getuseremail():
+	return str(loader_user(current_user.id).username)
 
+# On crée la route de connexion au site
 @app.route("/login", methods=["POST"])
 def login():
 	user = Users.query.filter_by(username=request.json["username"]).first()
@@ -56,26 +67,27 @@ def login():
 	else:
 		return "error"
 
-
+# On crée la route de déconnexion au site
 @app.route("/logout")
 def logout():
 	logout_user()
-	return redirect(url_for("home"))
+	return "success"
 
-
+# On crée la route de redirection à la page d'accueil du site
+@login_required
 @app.route("/")
 def home():
 	return redirect("/home/index.html")
 
+# On charge l'icone du site
 @app.route("/favicon.ico")
 def favicon():
     return send_from_directory("static/ing", "favicon.ico")
 
-
+# On charge les fichiers HTML, CSS et JS sur les pages
 @app.route("/home/<path:path>")
 def webApp(path):
     return send_from_directory("static", path)
 
-
-if __name__ == "__main__":
-	app.run("0.0.0.0")
+# On démarre le site
+app.run("0.0.0.0")

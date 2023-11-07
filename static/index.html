@@ -22,13 +22,13 @@
                 display: none;
             }
         }
-
+        
         @media (max-width: 600px) {
             .navbar .btn {
                 display: none;
             }
         }
-
+        
         .menu {
             flex-basis: 254px;
             width: 254px;
@@ -59,8 +59,8 @@
         </div>
 
         <script>
-            $(document).ready(function () {
-                $("#search-bar input").keyup(function () {
+            $(document).ready(function() {
+                $("#search-bar input").keyup(function() {
                     let val = $("#search-bar input").val();
                     if (val == "") {
                         $("#search-list").hide();
@@ -133,7 +133,7 @@
             </div>
 
             <script>
-                $(".menu-button").click(function () {
+                $(".menu-button").click(function() {
                     if ($(this).hasClass("ripple-effect")) {
                         $(".menu-button").removeClass("menu-button-active");
                         $(this).addClass("menu-button-active");
@@ -219,7 +219,7 @@
                     <h3>Se connecter</h3>
                     <div class="modern-input primary">
                         <input type="text" id="username-login" placeholder=" " autocomplete="off">
-                        <p>Entrez votre email</p>
+                        <p>Entrez votre email/nom d'utilisateur</p>
                     </div>
                     <div class="modern-input primary">
                         <input type="password" id="password-login" placeholder=" " autocomplete="off">
@@ -232,7 +232,7 @@
                     <h3>S'inscrire</h3>
                     <div class="modern-input primary">
                         <input type="text" id="username-register" placeholder=" " autocomplete="off">
-                        <p>Entrez votre email</p>
+                        <p>Entrez votre email/nom d'utilisateur</p>
                     </div>
                     <div class="modern-input primary">
                         <input type="password" id="password-register" placeholder=" " autocomplete="off">
@@ -241,7 +241,10 @@
                     <button class="btn btn-sp primary ripple-effect" id="register-button">S'inscrire</button>
                     <button class="btn btn-lt primary ripple-effect" id="show-login-button">Se connecter</button>
                 </div>
-                <div id="loggedin"></div>
+                <div id="loggedin">
+                    <p>Bonjour - !</p>
+                    <button class="btn btn-sp primary ripple-effect" id="logout-button">Se déconnecter</button>
+                </div>
             </div>
         </div>
 

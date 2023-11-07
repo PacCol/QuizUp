@@ -8,11 +8,14 @@
     position: absolute;
 }
 
+
 /* new quiz */
 
 
 /* login */
-#register {
+
+#register,
+#loggedin {
     display: none;
 }
 
