@@ -19,7 +19,8 @@ function showSection(id) {
     });
 }
 
-function networkError() {
+function networkError(error) {
+    console.log(error);
     alertBox("Erreur réseau", "Impossible de se connecter...", `
         <button class="btn btn-sp primary btn-align-right ripple-effect"
         onclick="document.location.reload();">Fermer</button>`);

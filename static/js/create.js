@@ -8,3 +8,28 @@ $("#question-number-dropdown .dropdown-content button").click(function () {
                                 </div>`);
     }
 });
+
+$("#publish-button").click(function() {
+    loader(true);
+    var questionsList = "Ca va?#WESH";
+    var responsesList = "GG#GG#GG#GG#GH#VB#VB#DF";
+    $.ajax({
+        type: "POST",
+        url: "/create",
+        data: JSON.stringify({ name: $("#name-input").val(), theme: $("#theme-input").val(), questions: questionsList, responses: responsesList}),
+        contentType: "application/json",
+
+        success: function() {
+            loader(false);
+            alertBox("Validé", "Vous pouvez vous connecter.", `
+                    <button class="btn btn-sp primary btn-align-right ripple-effect cancel">Fermer</button>`);
+        },
+
+        error: function(error) {
+            loader(false);
+            networkError(error);
+        },
+
+        timeout: 3000
+    });
+});

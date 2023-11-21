@@ -1,5 +1,5 @@
 # On importe les modules necessaires au server et à la base de donnée
-from flask import Flask, request, url_for, redirect, send_from_directory
+from flask import Flask, request, redirect, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 
@@ -24,12 +24,12 @@ class Users(UserMixin, db.Model):
 # On créé un objet quiz contenant les quizs créés par les utilisateur et on créé un tableau les contenant
 class Quizs(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(250), unique=True, nullable=False)
-	user_id = db.Column(db.String(250), nullable=False)
+	name = db.Column(db.String(250), unique=False, nullable=False)
+	user_id = db.Column(db.Integer, nullable=False)
+	username = db.Column(db.String(250), nullable=False)
 	theme = db.Column(db.String(250), nullable=False)
 	questions = db.Column(db.String(2250), nullable=False)
 	responses = db.Column(db.String(6000), nullable=False)
-
 
 # On associe la base de données au serveur Flask
 db.init_app(app)
@@ -44,9 +44,8 @@ def loader_user(user_id):
 	return Users.query.get(user_id)
 
 # On crée la route d'inscription au site
-@app.route('/register', methods=["POST"])
+@app.route("/register", methods=["POST"])
 def register():
-	print(request.json["username"])
 	user = Users(username=request.json["username"], password=request.json["password"])
 	db.session.add(user)
 	db.session.commit()
@@ -72,6 +71,21 @@ def login():
 def logout():
 	logout_user()
 	return "success"
+
+# On crée la route pour créer un quiz
+@login_required
+@app.route("/create", methods=["POST"])
+def create():
+	currentUser = loader_user(current_user.id)
+	quiz = Quizs(name=request.json["name"], user_id=currentUser.id, username=currentUser.username, theme=request.json["theme"], questions=request.json["questions"], responses=request.json["responses"])
+	db.session.add(quiz)
+	db.session.commit()
+	return "success"
+
+# On crée une route pour pouvoir afficher les quizs
+@app.route("/user")
+def getquizs():
+	return str(loader_user(current_user.id).username)
 
 # On crée la route de redirection à la page d'accueil du site
 @login_required

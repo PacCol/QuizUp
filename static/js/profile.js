@@ -26,9 +26,9 @@ $("#login-button").click(function() {
             }
         },
 
-        error: function() {
+        error: function(error) {
             loader(false);
-            networkError();
+            networkError(error);
         },
 
         timeout: 3000
@@ -49,9 +49,9 @@ $("#register-button").click(function() {
                     <button class="btn btn-sp primary btn-align-right ripple-effect cancel">Fermer</button>`);
         },
 
-        error: function() {
+        error: function(error) {
             loader(false);
-            networkError();
+            networkError(error);
         },
 
         timeout: 3000
@@ -112,9 +112,9 @@ $("#logout-button").click(function() {
             showLogin();
         },
 
-        error: function() {
+        error: function(error) {
             loader(false);
-            networkError();
+            networkError(error);
         },
 
         timeout: 3000
