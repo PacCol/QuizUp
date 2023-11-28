@@ -52,6 +52,7 @@ def register():
 	return "success"
 
 # On crée une route pour pouvoir afficher les informations de l'utilisateur
+@login_required
 @app.route("/user")
 def getuseremail():
 	return str(loader_user(current_user.id).username)
@@ -83,12 +84,12 @@ def create():
 	return "success"
 
 # On crée une route pour pouvoir afficher les quizs
+@login_required
 @app.route("/user")
 def getquizs():
 	return str(loader_user(current_user.id).username)
 
 # On crée la route de redirection à la page d'accueil du site
-@login_required
 @app.route("/")
 def home():
 	return redirect("/home/index.html")
@@ -104,4 +105,4 @@ def webApp(path):
     return send_from_directory("static", path)
 
 # On démarre le site
-app.run("0.0.0.0")
+app.run("0.0.0.0", debug=True)
