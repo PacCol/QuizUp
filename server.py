@@ -1,5 +1,5 @@
 # On importe les modules necessaires au server et à la base de donnée
-from flask import Flask, request, redirect, send_from_directory
+from flask import Flask, request, redirect, send_from_directory, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 
@@ -84,10 +84,22 @@ def create():
 	return "success"
 
 # On crée une route pour pouvoir afficher les quizs
-@login_required
-@app.route("/user")
+@app.route("/quizs")
 def getquizs():
-	return str(loader_user(current_user.id).username)
+	table_data = []
+	all_records = Quizs.query.all()[::-1]
+	for record in all_records:
+		table_data.append({
+        	'id': record.id,
+			'name': record.name,
+			'user_id': record.user_id,
+			'username': record.username,
+			'theme': record.theme,
+			'questions': record.questions,
+			'responses': record.responses
+
+        })
+	return jsonify(table_data)
 
 # On crée la route de redirection à la page d'accueil du site
 @app.route("/")

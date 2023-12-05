@@ -1,8 +1,8 @@
-$("#question-number-dropdown .dropdown-content button").click(function () {
+$("#question-number-dropdown .dropdown-content button").click(function() {
     $("#questions").empty();
     $("#question-number-dropdown .btn-badge").text($(this).data("value"));
     for (let i = 0; i < $(this).data("value"); i++) {
-        $("#questions").append(`<button class="accordion-tab ripple-effect primary">Question ` + (i+1).toString() + `</button>
+        $("#questions").append(`<button class="accordion-tab ripple-effect primary">Question ` + (i + 1).toString() + `</button>
                                 <div class="panel">
                                     <p>Some text...</p>
                                 </div>`);
@@ -16,12 +16,12 @@ $("#publish-button").click(function() {
     $.ajax({
         type: "POST",
         url: "/create",
-        data: JSON.stringify({ name: $("#name-input").val(), theme: $("#theme-input").val(), questions: questionsList, responses: responsesList}),
+        data: JSON.stringify({ name: $("#name-input").val(), theme: $("#theme-input").val(), questions: questionsList, responses: responsesList }),
         contentType: "application/json",
 
         success: function() {
             loader(false);
-            alertBox("Validé", "Vous pouvez vous connecter.", `
+            alertBox("Validé", "Votre quiz a été publié.", `
                     <button class="btn btn-sp primary btn-align-right ripple-effect cancel">Fermer</button>`);
         },
 
