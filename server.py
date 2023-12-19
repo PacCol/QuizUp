@@ -18,7 +18,7 @@ login_manager.init_app(app)
 # On créé un objet User et on créé un tableau contenant les utilisateurs
 class Users(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String(250), unique=True, nullable=False)
+	username = db.Column(db.String(250), unique=1, nullable=False)
 	password = db.Column(db.String(250), nullable=False)
 
 # On créé un objet quiz contenant les quizs créés par les utilisateur et on créé un tableau les contenant
@@ -28,6 +28,7 @@ class Quizs(db.Model):
 	user_id = db.Column(db.Integer, nullable=False)
 	username = db.Column(db.String(250), nullable=False)
 	theme = db.Column(db.String(250), nullable=False)
+	questions_number = db.Column(db.Integer, nullable=False)
 	questions = db.Column(db.String(2250), nullable=False)
 	responses = db.Column(db.String(6000), nullable=False)
 
@@ -37,6 +38,9 @@ db.init_app(app)
 # On continue l'initialisation de la base de donnée 
 with app.app_context():
 	db.create_all()
+	#admin_user = Users(username="admin", password="admin")
+	#db.session.add(admin_user)
+	#db.session.commit()
 
 # On charge les données de l'utilisateur à chaque requête
 @login_manager.user_loader
@@ -78,7 +82,7 @@ def logout():
 @app.route("/create", methods=["POST"])
 def create():
 	currentUser = loader_user(current_user.id)
-	quiz = Quizs(name=request.json["name"], user_id=currentUser.id, username=currentUser.username, theme=request.json["theme"], questions=request.json["questions"], responses=request.json["responses"])
+	quiz = Quizs(name=request.json["name"], user_id=currentUser.id, username=currentUser.username, theme=request.json["theme"], questions_number=int(request.json["questionsNumber"]), questions=request.json["questions"], responses=request.json["responses"])
 	db.session.add(quiz)
 	db.session.commit()
 	return "success"
@@ -95,6 +99,7 @@ def getquizs():
 			'user_id': record.user_id,
 			'username': record.username,
 			'theme': record.theme,
+			'questions_number': record.questions_number,
 			'questions': record.questions,
 			'responses': record.responses
 

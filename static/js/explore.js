@@ -21,7 +21,8 @@ function loadQuizs() {
                                                 <th>${response[i].name}</th>
                                                 <th>${response[i].theme}</th>
                                                 <th>${response[i].username}</th>
-                                                <th></th>
+                                                <th>${response[i].questions_number}</th>
+                                                <th><button class="btn btn-sp primary ripple-effect" onclick="loader(true, 'danger');">Jouer</button></th>
                                             </tr>`);
             }
         },
