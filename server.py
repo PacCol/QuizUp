@@ -27,7 +27,7 @@ class Quizs(db.Model):
 	name = db.Column(db.String(250), unique=False, nullable=False)
 	user_id = db.Column(db.Integer, nullable=False)
 	username = db.Column(db.String(250), nullable=False)
-	theme = db.Column(db.String(250), nullable=False)
+	theme = db.Column(db.Integer, nullable=False)
 	questions_number = db.Column(db.Integer, nullable=False)
 	questions = db.Column(db.String(2250), nullable=False)
 	responses = db.Column(db.String(6000), nullable=False)
@@ -82,10 +82,13 @@ def logout():
 @app.route("/create", methods=["POST"])
 def create():
 	currentUser = loader_user(current_user.id)
-	quiz = Quizs(name=request.json["name"], user_id=currentUser.id, username=currentUser.username, theme=request.json["theme"], questions_number=int(request.json["questionsNumber"]), questions=request.json["questions"], responses=request.json["responses"])
-	db.session.add(quiz)
-	db.session.commit()
-	return "success"
+	if 1 <=request.json["theme"] <= 5:
+		quiz = Quizs(name=request.json["name"], user_id=currentUser.id, username=currentUser.username, theme=request.json["theme"], questions_number=int(request.json["questionsNumber"]), questions=request.json["questions"], responses=request.json["responses"])
+		db.session.add(quiz)
+		db.session.commit()
+		return "success"
+	else:
+		return "error"
 
 # On crée une route pour pouvoir afficher les quizs
 @app.route("/quizs")
@@ -99,12 +102,32 @@ def getquizs():
 			'user_id': record.user_id,
 			'username': record.username,
 			'theme': record.theme,
+			'questions_number': record.questions_number
+
+        })
+	return jsonify(table_data)
+
+# On crée une route pour obtenir les données d'un quiz en particulier
+@app.route("/quiz",methods=['GET'])
+def getquiz():
+	quiz_id = request.args.get('id', None)
+	if quiz_id is None:
+		abort(404)
+	else:
+		record = Quizs.query.filter_by(id=quiz_id)[0]
+		table_data = {
+			'id': record.id,
+			'name': record.name,
+			'user_id': record.user_id,
+			'username': record.username,
+			'theme': record.theme,
 			'questions_number': record.questions_number,
 			'questions': record.questions,
 			'responses': record.responses
 
-        })
-	return jsonify(table_data)
+		}
+		return jsonify(table_data)
+
 
 # On crée la route de redirection à la page d'accueil du site
 @app.route("/")

@@ -1,4 +1,5 @@
 var questionsNumber = 10;
+var themeNumber = 1
 
 $("#new-button").click(function() {
     displayFields();
@@ -40,17 +41,22 @@ $("#question-number-dropdown .dropdown-content button").click(function() {
     displayFields();
 });
 
+$("#theme-dropdown .dropdown-content button").click(function() {
+    themeNumber = $(this).data("value");
+    $("#theme-dropdown .btn-badge").text(getThemeFromNumber(themeNumber));
+});
+
 $("#publish-button").click(function() {
     loader(true);
     var questionsList = "";
     for (let i = 0; i < questionsNumber; i++) {
-        questionsList = questionsList + $("#question-" + (i + 1).toString() + "-q").val() + "§";
+        questionsList = questionsList + $("#question-" + (i + 1).toString() + "-q").val() + "#";
     }
     var responsesList = "GG#GG#GG#GG#GH#VB#VB#DF";
     $.ajax({
         type: "POST",
         url: "/create",
-        data: JSON.stringify({ name: $("#name-input").val(), theme: $("#theme-input").val(), questionsNumber: questionsNumber, questions: questionsList, responses: responsesList }),
+        data: JSON.stringify({ name: $("#name-input").val(), theme: themeNumber, questionsNumber: questionsNumber, questions: questionsList, responses: responsesList }),
         contentType: "application/json",
 
         success: function() {

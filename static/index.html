@@ -106,6 +106,11 @@
                 <p>Explorer</p>
             </div>
 
+            <div class="menu-button primary ripple-effect disabled" id="play-button">
+                <i class="material-icons">videogame_asset</i>
+                <p>Partie en cours</p>
+            </div>
+
             <div class="menu-button success ripple-effect" id="new-button">
                 <i class="material-icons">add</i>
                 <p>Nouveau quiz</p>
@@ -166,20 +171,45 @@
                 </div>
             </div>
 
+            <div id="play">
+                <div class="control">
+                    <h1>Partie en cours</h1>
+                </div>
+
+                <p id="no-active-game">Pour commencer une partie, trouvez un quiz dans la section "explorer".</p>
+
+                <div id="quiz">
+                    <h3 id="quiz-title">Titre</h3>
+                    <p id="current-question-number">Question</p>
+                    <p id="current-question">Question</p>
+                    <button class="btn btn-sp primary">Réponse 1</button>
+                    <button class="btn btn-sp success">Réponse 2</button>
+                    <button class="btn btn-sp warning">Réponse 3</button>
+                    <button class="btn btn-sp danger">Réponse 4</button>
+                </div>
+            </div>
+
             <div id="new">
                 <div class="control">
                     <h1>Créer un nouveau quiz</h1>
                 </div>
 
+                <div class="modern-dropdown" id="theme-dropdown">
+                    <button class="btn btn-sp primary ripple-effect">
+                        Thème du quiz <span class="btn-badge">Français</span> <i class="material-icons">expand_more</i>
+                    </button>
+                    <div class="dropdown-content">
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="1">Français</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="2">Maths</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="3">Histoire-Géo</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="4">Sciences</button>
+                        <button class="btn btn-ol btn-sm primary ripple-effect" data-value="5">Culture générale</button>
+                    </div>
+                </div>
 
                 <div class="modern-input primary">
                     <input type="text" id="name-input" placeholder=" " autocomplete="off">
                     <p>Entrez le nom du quiz</p>
-                </div>
-
-                <div class="modern-input primary">
-                    <input type="text" id="theme-input" placeholder=" " autocomplete="off">
-                    <p>Entrez le thème du quiz</p>
                 </div>
 
                 <div class="modern-dropdown" id="question-number-dropdown">

@@ -15,7 +15,9 @@
 /* login */
 
 #register,
-#loggedin {
+#loggedin,
+#play,
+#quiz {
     display: none;
 }
 
