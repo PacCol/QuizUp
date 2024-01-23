@@ -69,4 +69,24 @@ function startQuiz(id) {
 function showQuestion(i) {
     $("#current-question-number").text("Question " + (i + 1) + "/" + currentQuiz.questions_number);
     $("#current-question").text(currentQuiz.questions.split("#")[i]);
+    let solution = currentQuiz.responses.split("#")[i * 4];
+    let answer1 = currentQuiz.responses.split("#")[i * 4 + 1];
+    let answer2 = currentQuiz.responses.split("#")[i * 4 + 2];
+    let answer3 = currentQuiz.responses.split("#")[i * 4 + 3];
+    order = [1, 2, 3, 4]
+    order = order.sort(() => Math.random() - 0.5);
+    $("#answer-" + order[0]).text(solution);
+    $("#answer-" + order[1]).text(answer1);
+    $("#answer-" + order[2]).text(answer2);
+    $("#answer-" + order[3]).text(answer3);
+}
+
+$("#end-game").click(function() {
+    endGame();
+});
+
+function endGame() {
+    $("#no-active-game").show();
+    $("#quiz").hide();
+    showSection("explore");
 }

@@ -52,7 +52,13 @@ $("#publish-button").click(function() {
     for (let i = 0; i < questionsNumber; i++) {
         questionsList = questionsList + $("#question-" + (i + 1).toString() + "-q").val() + "#";
     }
-    var responsesList = "GG#GG#GG#GG#GH#VB#VB#DF";
+    var responsesList = "";
+    for (let i = 0; i < questionsNumber; i++) {
+        responsesList = responsesList + $("#question-" + (i + 1).toString() + "-s").val() + "#";
+        responsesList = responsesList + $("#question-" + (i + 1).toString() + "-1").val() + "#";
+        responsesList = responsesList + $("#question-" + (i + 1).toString() + "-2").val() + "#";
+        responsesList = responsesList + $("#question-" + (i + 1).toString() + "-3").val() + "#";
+    }
     $.ajax({
         type: "POST",
         url: "/create",
