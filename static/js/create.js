@@ -5,6 +5,7 @@ $("#new-button").click(function() {
     displayFields();
 })
 
+// C'est une fonction qui génère dynamiquement des champs de question pour créer un quiz
 function displayFields() {
     $("#questions").empty();
     $("#question-number-dropdown .btn-badge").text(questionsNumber);
@@ -46,6 +47,7 @@ $("#theme-dropdown .dropdown-content button").click(function() {
     $("#theme-dropdown .btn-badge").text(getThemeFromNumber(themeNumber));
 });
 
+// C'est une fonction qui s'active lorsqu'on clique sur le bouton "publier", et qui envoie les données du formulaire au serveur (ou pas si erreur)
 $("#publish-button").click(function() {
     loader(true);
     var questionsList = "";

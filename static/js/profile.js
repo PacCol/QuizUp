@@ -1,3 +1,4 @@
+// C'est une fonction qui affiche les boutons "s'inscrire" et "se connecter" permettant à l'utilisateur de se connecter
 $("#profile-button").click(function() {
     $("#show-register-button").click(function() {
         showRegister();
@@ -8,6 +9,7 @@ $("#profile-button").click(function() {
     getUser();
 });
 
+// C'est une fonction qui vérifie les informations de connexion de l'utilisateur et le connecte au serveur si les infos sont bonnes
 $("#login-button").click(function() {
     loader(true);
     $.ajax({
@@ -35,6 +37,7 @@ $("#login-button").click(function() {
     });
 });
 
+// C'est une fonction qui envoie au serveur les informations d'enregistrement de l'utilsateur et lui permet de s'inscrire
 $("#register-button").click(function() {
     loader(true);
     $.ajax({
@@ -101,6 +104,7 @@ function showLoggedin() {
     });
 }
 
+// C'est une fonction qui permet à l'utilsateur de se déconnecter et qui affiche ensuite l'interface de connexion
 $("#logout-button").click(function() {
     loader(true);
     $.ajax({

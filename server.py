@@ -146,3 +146,10 @@ def webApp(path):
 
 # On démarre le site
 app.run("0.0.0.0", debug=True)
+
+# On crée une route pour afficher la progression des utilisateurs
+@login_required
+@app.route("/progress", methods=['GET'])
+def progress():
+	currentUser = loader_user(current_user.id)
+	return ""

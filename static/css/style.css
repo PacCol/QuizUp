@@ -11,7 +11,8 @@
 #register,
 #loggedin,
 #play,
-#quiz {
+#quiz,
+#quiz-results {
     display: none;
 }
 

@@ -182,11 +182,23 @@
                     <h3 id="quiz-title">Titre</h3>
                     <p id="current-question-number">Question</p>
                     <p id="current-question">Question</p>
-                    <button class="btn btn-sp primary ripple-effect" id="answer-1">Réponse 1</button>
-                    <button class="btn btn-sp success ripple-effect" id="answer-2">Réponse 2</button>
-                    <button class="btn btn-sp warning ripple-effect" id="answer-3">Réponse 3</button>
-                    <button class="btn btn-sp danger ripple-effect" id="answer-4">Réponse 4</button>
+                    <button class="btn btn-sp primary ripple-effect answer" id="answer-1">Réponse 1</button>
+                    <button class="btn btn-sp success ripple-effect answer" id="answer-2">Réponse 2</button>
+                    <button class="btn btn-sp warning ripple-effect answer" id="answer-3">Réponse 3</button>
+                    <button class="btn btn-sp danger ripple-effect answer" id="answer-4">Réponse 4</button>
                     <button class="btn btn-sp danger ripple-effect" id="end-game">Quitter <i class="material-icons">logout</i></button>
+                </div>
+
+                <div id="quiz-results">
+                    <h3>Vos résultats</h3>
+                    <p id="score">Votre score: -</p>
+                    <p>Détail des réponses:</p>
+                    <div class="accordion" id="score-details">
+                        <button class="accordion-tab ripple-effect primary">-</button>
+                        <div class="panel">
+                            <p>-</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -237,9 +249,9 @@
                 </div>
 
                 <div class="accordion" id="questions">
-                    <button class="accordion-tab ripple-effect primary">Question ` + (i + 1).toString() + `</button>
+                    <button class="accordion-tab ripple-effect primary">-</button>
                     <div class="panel">
-                        <p>Some text...</p>
+                        <p>-</p>
                     </div>
                 </div>
 
@@ -252,7 +264,8 @@
                     <h1>Ma progression</h1>
                 </div>
 
-                <h3>En travaux</h3>
+                <h3>Statistiques des quizs réalisés</h3>
+                <div id="diagram"></div>
             </div>
 
             <div id="profile">
