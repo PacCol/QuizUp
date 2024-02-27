@@ -1,5 +1,5 @@
 # On importe les modules necessaires au server et à la base de donnée
-from flask import Flask, request, redirect, send_from_directory, jsonify
+from flask import Flask, request, redirect, send_from_directory, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 
@@ -20,6 +20,8 @@ class Users(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(250), unique=1, nullable=False)
 	password = db.Column(db.String(250), nullable=False)
+	rightAnswers = db.Column(db.Integer, nullable=False)
+	falseAnswers = db.Column(db.Integer, nullable=False)
 
 # On créé un objet quiz contenant les quizs créés par les utilisateur et on créé un tableau les contenant
 class Quizs(db.Model):
@@ -50,14 +52,14 @@ def loader_user(user_id):
 # On crée la route d'inscription au site
 @app.route("/register", methods=["POST"])
 def register():
-	user = Users(username=request.json["username"], password=request.json["password"])
+	user = Users(username=request.json["username"], password=request.json["password"], rightAnswers=0, falseAnswers=0)
 	db.session.add(user)
 	db.session.commit()
 	return "success"
 
 # On crée une route pour pouvoir afficher les informations de l'utilisateur
-@login_required
 @app.route("/user")
+@login_required
 def getuseremail():
 	return str(loader_user(current_user.id).username)
 
@@ -78,8 +80,8 @@ def logout():
 	return "success"
 
 # On crée la route pour créer un quiz
-@login_required
 @app.route("/create", methods=["POST"])
+@login_required
 def create():
 	currentUser = loader_user(current_user.id)
 	if 1 <=request.json["theme"] <= 5:
@@ -144,12 +146,28 @@ def favicon():
 def webApp(path):
     return send_from_directory("static", path)
 
-# On démarre le site
-app.run("0.0.0.0", debug=True)
-
 # On crée une route pour afficher la progression des utilisateurs
-@login_required
 @app.route("/progress", methods=['GET'])
+@login_required
 def progress():
 	currentUser = loader_user(current_user.id)
-	return ""
+	return jsonify({"rightAnswers": currentUser.rightAnswers,
+				 "falseAnswers": currentUser.falseAnswers})
+
+# On crée une route pour enregistrer la progression des utilisateurs
+@app.route("/results", methods=['POST'])
+@login_required
+def getResults():
+	currentUser = loader_user(current_user.id)
+	currentUser.rightAnswers += request.json["rightAnswers"]
+	currentUser.falseAnswers += request.json["falseAnswers"]
+	db.session.commit()
+	return "success"
+
+@app.route("/search", methods=['POST'])
+def searchQuizs():
+	#search = request.json["query"]
+	return jsonify(["ggg"])
+
+# On démarre le site
+app.run("0.0.0.0", debug=True)

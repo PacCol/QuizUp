@@ -8,6 +8,10 @@
     position: absolute;
 }
 
+.searchbar-btn {
+    display: inline-block; // FONCTIONNE PAS
+}
+
 #register,
 #loggedin,
 #play,

@@ -1,4 +1,5 @@
 var currentQuiz = {};
+var score = 0;
 
 $(document).ready(function() {
     loadQuizs();
@@ -8,6 +9,7 @@ $("#explore-button").click(function() {
     loadQuizs();
 });
 
+// Cette fonction charge et affiche les différents quizs disponibles sur une page (ou affiche une erreur si il y a une erreur réseau du côté de l'utilisateur)
 function loadQuizs() {
     loader(true);
     $.ajax({
@@ -38,6 +40,7 @@ function loadQuizs() {
     });
 }
 
+// C'est une fonction qui récupère les données d'un quiz sur lequel l'utilisateur a cliqué pour jouer, et qui affiche ensuite la première question du quiz et lss choix de réponses 
 function startQuiz(id) {
     loader(true);
     $.ajax({
@@ -87,6 +90,7 @@ function startQuiz(id) {
     });
 }
 
+// C'est une fonction qui affiche les différentes questions du quiz actuel les unes après les autres et qui affiche les différents choix de réponse possibles pour la question actuelle
 function showQuestion(i) {
     $("#current-question-number").text("Question " + (i + 1) + "/" + currentQuiz.questions_number);
     $("#current-question").text(currentQuiz.questions[i].question);
@@ -100,6 +104,7 @@ function showQuestion(i) {
     currentQuiz.current_question = i;
 }
 
+// C'est une fonction qui récupère la réponse sur laquelle l'utilisateur a cliqué et qui lui indique ensuite si il a juste ou pas
 $(".answer").click(function() {
     currentQuiz.questions[currentQuiz.current_question].answer = $(this).text();
     if (currentQuiz.current_question < currentQuiz.questions_number - 1) {
@@ -108,7 +113,7 @@ $(".answer").click(function() {
         $("#quiz").fadeOut(300).promise().done(function() {
             $("#quiz-results").fadeIn(300);
             $("#score-details").empty();
-            let score = 0;
+            score = 0;
             for (let i = 0; i < currentQuiz.questions_number; i++) {
                 if (currentQuiz.questions[i].response == currentQuiz.questions[i].answer) {
                     $("#score-details").append(`<button class="accordion-tab ripple-effect success">` + currentQuiz.questions[i].question + `</button>
@@ -134,8 +139,35 @@ $("#end-game").click(function() {
     endGame();
 });
 
+// C'est une fonction qui met fin au quiz lorsqu'il est terminé
 function endGame() {
     $("#no-active-game").show();
     $("#quiz").hide();
+    $("#quiz-results").hide();
     showSection("explore");
 }
+
+// Cette fonction permet d'envoyer les résultats au serveur pour les enregistrer
+$("#save-results").click(function() {
+    loader(true);
+    $.ajax({
+        type: "POST",
+        url: "/results",
+        data: JSON.stringify({ "rightAnswers": score, "falseAnswers": (currentQuiz.questions_number - score) }),
+        contentType: "application/json",
+
+        success: function() {
+            loader(false);
+            alertBox("Validé", "Vos résultats ont été enregistrés.", `
+                    <button class="btn btn-sp primary btn-align-right ripple-effect cancel">Fermer</button>`);
+        },
+
+        error: function(error) {
+            loader(false);
+            networkError(error);
+        },
+
+        timeout: 3000
+    });
+    endGame();
+});

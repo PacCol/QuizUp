@@ -58,36 +58,6 @@
             </div>
         </div>
 
-        <script>
-            $(document).ready(function() {
-                $("#search-bar input").keyup(function() {
-                    let val = $("#search-bar input").val();
-                    if (val == "") {
-                        $("#search-list").hide();
-                        return;
-                    }
-
-                    var results = ["En travaux"];
-
-                    $("#search-list a").remove();
-
-                    if (results.length != 0) {
-                        $("#search-list").show();
-
-                        for (var i = 0; i < results.length; i++) {
-                            $("#search-list").append(`
-                                <a href="#">${results[i]}</a>
-                            `);
-                        }
-
-                    } else {
-                        $("#search-list").hide();
-                    }
-
-                });
-            });
-        </script>
-
         <div></div>
 
     </div>
@@ -186,7 +156,7 @@
                     <button class="btn btn-sp success ripple-effect answer" id="answer-2">Réponse 2</button>
                     <button class="btn btn-sp warning ripple-effect answer" id="answer-3">Réponse 3</button>
                     <button class="btn btn-sp danger ripple-effect answer" id="answer-4">Réponse 4</button>
-                    <button class="btn btn-sp danger ripple-effect" id="end-game">Quitter <i class="material-icons">logout</i></button>
+                    <button class="btn btn-ol danger ripple-effect" id="end-game">Quitter <i class="material-icons">logout</i></button>
                 </div>
 
                 <div id="quiz-results">
@@ -199,6 +169,7 @@
                             <p>-</p>
                         </div>
                     </div>
+                    <button class="btn btn-sp primary ripple-effect" id="save-results">Save results <i class="material-icons">save</i></button>
                 </div>
             </div>
 
@@ -264,6 +235,8 @@
                     <h1>Ma progression</h1>
                 </div>
 
+                <h3 id="total-responses-nb">Nombre total de questions réalisées: -</h3>
+
                 <h3>Statistiques des quizs réalisés</h3>
                 <div id="diagram"></div>
             </div>
@@ -310,9 +283,10 @@
 
     <script src="RealCSS/all.min.js "></script>
 
-    <script src="js/section.js "></script>
+    <script src="js/common.js "></script>
     <script src="js/explore.js "></script>
     <script src="js/create.js "></script>
+    <script src="js/analytics.js "></script>
     <script src="js/profile.js "></script>
 
 </body>
