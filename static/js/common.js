@@ -61,19 +61,27 @@ $(document).ready(function() {
 
             success: function(response) {
                 var results = response;
-                $("#search-list a").remove();
+                $("#search-list").empty();
+
+                $("#search-list").show();
 
                 if (results.length != 0) {
-                    $("#search-list").show();
 
                     for (var i = 0; i < results.length; i++) {
                         $("#search-list").append(`
-                            <p>${results[i]}</p><button class="btn btn-sp btn-sm primary ripple-effect searchbar-btn">Jouer</button>
+                            <div class="search-result">
+                                <p>${results[i].name}</p>
+                                <button class="btn btn-sp btn-sm primary ripple-effect searchbar-btn" onclick="startQuiz(${results[i].id});">Jouer</button>
+                            </div>
                         `);
                     }
 
                 } else {
-                    $("#search-list").hide();
+                    $("#search-list").append(`
+                            <div class="search-result">
+                                <p>Pas de résultat...</p>
+                            </div>
+                        `);
                 }
             },
 

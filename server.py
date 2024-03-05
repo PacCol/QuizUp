@@ -67,11 +67,14 @@ def getuseremail():
 @app.route("/login", methods=["POST"])
 def login():
 	user = Users.query.filter_by(username=request.json["username"]).first()
-	if user.password == request.json["password"]:
-		login_user(user)
-		return "success"
+	if user == None:
+		return "user-not-found"
 	else:
-		return "error"
+		if user.password == request.json["password"]:
+			login_user(user)
+			return "success"
+		else:
+			return "bad-password"
 
 # On crée la route de déconnexion au site
 @app.route("/logout")
@@ -164,10 +167,16 @@ def getResults():
 	db.session.commit()
 	return "success"
 
+# On crée une route pour pouvoir rechercher un quiz dans la barre de recherche
 @app.route("/search", methods=['POST'])
 def searchQuizs():
-	#search = request.json["query"]
-	return jsonify(["ggg"])
+	table_data = []
+	all_records = Quizs.query.all()[::-1]
+	search = request.json["query"]
+	for record in all_records:
+		if str.lower(search) in str.lower(record.name) or str.lower(search) in str.lower(record.questions) and "#" not in search:
+			table_data.append({'id' : record.id, 'name' : record.name})
+	return jsonify(table_data)
 
 # On démarre le site
 app.run("0.0.0.0", debug=True)

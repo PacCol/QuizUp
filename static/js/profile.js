@@ -22,8 +22,11 @@ $("#login-button").click(function() {
             loader(false);
             if (response == "success") {
                 getUser();
-            } else {
+            } else if (response == "bad-password") {
                 alertBox("Erreur", "Vérifiez votre mot de passe.", `
+                    <button class="btn btn-sp primary btn-align-right ripple-effect cancel">Fermer</button>`);
+            } else if (response == "user-not-found") {
+                alertBox("Erreur", "Vérifiez votre nom d'utilisateur.", `
                     <button class="btn btn-sp primary btn-align-right ripple-effect cancel">Fermer</button>`);
             }
         },
