@@ -78,10 +78,10 @@ $(document).ready(function() {
 
                 } else {
                     $("#search-list").append(`
-                            <div class="search-result">
-                                <p>Pas de résultat...</p>
-                            </div>
-                        `);
+                        <div class="search-result">
+                            <p>Pas de résultat...</p>
+                        </div>
+                    `);
                 }
             },
 
