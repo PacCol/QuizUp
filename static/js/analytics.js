@@ -2,6 +2,7 @@ $("#progression-button").click(function() {
     loadProgression();
 });
 
+// C'est une fonction qui charge les résultats aux quizs de l'utilisateur et qui crée un diagramme indiquant la proportion de bonnes et de mauvaises réponses
 function loadProgression() {
     loader(true);
     $.ajax({
